@@ -87,3 +87,12 @@ list.remove half
 assert list.size == 1
 assert list.head.data == "0.5"
 assert list.tail.data == "0.5"
+
+
+list = List.new
+assert list.size == 0
+one = list.insert "1"
+two = list.insert "2"
+assert list.head == two
+
+
