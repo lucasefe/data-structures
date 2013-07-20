@@ -54,6 +54,23 @@ class List
     end
   end
 
+  def find_mth(mth)
+    node = @head
+    i = 0
+    
+    # Advances position
+    while i < mth
+      return unless node.next
+      node = node.next
+      i += 1
+    end
+    mth_node = @head
+    while node.next
+      node = node.next
+      mth_node = mth_node.next
+    end
+    mth_node
+  end
 end
 
 list = List.new
@@ -74,4 +91,4 @@ include Test::Unit::Assertions
 
 assert list.head.value == 2
 assert list.tail.value == 9
-
+assert list.find_mth(1).value == 8
