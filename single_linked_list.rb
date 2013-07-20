@@ -1,3 +1,6 @@
+require 'test/unit'
+include Test::Unit::Assertions
+
 class List
   attr_accessor :head, :tail
   Node = Struct.new(:value, :next)
@@ -71,6 +74,22 @@ class List
     end
     mth_node
   end
+
+  # O(n)
+  def cycle?
+    slow = self.head
+    fast = self.head.next
+    loop do 
+      if fast.nil? || fast.next.nil?
+        return false
+      elsif fast == slow || fast.next == slow
+        return true
+      else
+        slow = slow.next
+        fast = fast.next.next
+      end
+    end
+  end
 end
 
 list = List.new
@@ -85,10 +104,21 @@ list.remove(10)
 list.each do |node|
   puts node.value
 end
-
-require 'test/unit'
-include Test::Unit::Assertions
+assert !list.cycle?
 
 assert list.head.value == 2
 assert list.tail.value == 9
 assert list.find_mth(1).value == 8
+assert !list.cycle?
+
+
+# Cycles
+
+list = List.new
+list.insert(1)
+list.insert(2)
+list.insert(3)
+list.insert(4)
+list.tail.next = list.head
+
+assert list.cycle? 
