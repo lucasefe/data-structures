@@ -23,6 +23,20 @@ def search(array, value, lower = nil, upper = nil)
   end
 end
 
+def search(array, value)
+  lower = 0
+  upper = array.size - 1
+  while (upper-lower) > 0
+    center = (upper / 2) + lower
+    return true if array[center] == value
+    if value > array[center]
+      lower = center + 1
+    else
+      upper = center - 1
+    end
+  end
+  return false 
+end
 
 assert search(array, 2)
 assert !search(array, 3)
